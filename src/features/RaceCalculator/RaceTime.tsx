@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Text, TextInput, Title } from '@mantine/core';
+import { Box, Button, Grid, Text, TextInput, Title } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import type { Pace, Time } from '../../types/types';
 import * as utils from '../../utils/utils';
