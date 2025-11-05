@@ -1,46 +1,61 @@
-import { Card, Title, TextInput, Box, Text, Table, Divider } from '@mantine/core';
-import { useCallback, useMemo, useState } from 'react';
-import type { Pace, Time } from '../types/types';
-import * as utils from '../utils/utils';
+import {
+  Card,
+  Title,
+  TextInput,
+  Box,
+  Text,
+  Table,
+  Divider,
+} from "@mantine/core";
+import { useCallback, useMemo, useState } from "react";
+import type { Pace, Time } from "../types/types";
+import * as utils from "../utils/utils";
 
 export function VMACalculator() {
   const [inputSpeed, setInputSpeed] = useState<number>(12);
 
   const roundToTwoDecimals = useCallback((a: number) => {
-    return utils.roundToTwoDecimals(a)
-  }, [])
+    return utils.roundToTwoDecimals(a);
+  }, []);
 
   const speedToPace = useCallback((speed: number) => {
-    return utils.speedToPace(speed)
-  }, [])
+    return utils.speedToPace(speed);
+  }, []);
 
   const paceAndDistanceToTime = useCallback((pace: Pace, distance: number) => {
-    return utils.paceAndDistanceToTime(pace, distance)
-  }, [])
+    return utils.paceAndDistanceToTime(pace, distance);
+  }, []);
 
   const formatPace = useCallback((pace: Pace) => {
-    return utils.formatPace(pace)
-  }, [])
+    return utils.formatPace(pace);
+  }, []);
 
   const formatTime = useCallback((time: Time) => {
-    return utils.formatTime(time)
-  }, [])
+    return utils.formatTime(time);
+  }, []);
 
   const data = useMemo(() => {
-    return [1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7].map(i => {
-      const pace = speedToPace(inputSpeed * i) 
+    return [1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7].map((i) => {
+      const pace = speedToPace(inputSpeed * i);
       return {
-        vma: i * 100 + '%',
+        vma: i * 100 + "%",
         speed: roundToTwoDecimals(inputSpeed * i),
         pace: formatPace(pace),
         km5: formatTime(paceAndDistanceToTime(pace, 5)),
         km10: formatTime(paceAndDistanceToTime(pace, 10)),
         km20: formatTime(paceAndDistanceToTime(pace, 20)),
         half: formatTime(paceAndDistanceToTime(pace, 21.0975)),
-        marathon: formatTime(paceAndDistanceToTime(pace, 42.195)) 
-      }
-    })
-    }, [formatPace, formatTime, inputSpeed, paceAndDistanceToTime, roundToTwoDecimals, speedToPace])
+        marathon: formatTime(paceAndDistanceToTime(pace, 42.195)),
+      };
+    });
+  }, [
+    formatPace,
+    formatTime,
+    inputSpeed,
+    paceAndDistanceToTime,
+    roundToTwoDecimals,
+    speedToPace,
+  ]);
 
   return (
     <Card shadow="sm" padding="xl" radius="md">
@@ -51,25 +66,27 @@ export function VMACalculator() {
       <TextInput
         value={inputSpeed}
         onChange={(event) => {
-          if (event.currentTarget.value == '') {
-            setInputSpeed(NaN)
+          if (event.currentTarget.value == "") {
+            setInputSpeed(NaN);
           }
-          setInputSpeed(roundToTwoDecimals(parseFloat(event.currentTarget.value)))}
-        }
+          setInputSpeed(
+            roundToTwoDecimals(parseFloat(event.currentTarget.value))
+          );
+        }}
         label="Your VMA (km/h)"
         placeholder="16.0"
         type="number"
         step={0.1}
-        style={{ maxWidth: '300px' }}
+        style={{ maxWidth: "300px" }}
       />
 
       <Box
         style={{
-          backgroundColor: '#e7f5ff',
-          border: '1px solid #a5d8ff',
-          borderRadius: '4px',
-          padding: '1rem',
-          marginTop: '1rem',
+          backgroundColor: "#e7f5ff",
+          border: "1px solid #a5d8ff",
+          borderRadius: "4px",
+          padding: "1rem",
+          marginTop: "1rem",
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
@@ -89,7 +106,7 @@ export function VMACalculator() {
         Race Times by VMA Percentage
       </Title>
 
-      <Box style={{ overflowX: 'auto' }}>
+      <Box style={{ overflowX: "auto" }}>
         <Table striped highlightOnHover>
           <Table.Thead>
             <Table.Tr>
@@ -122,17 +139,18 @@ export function VMACalculator() {
 
       <Box
         style={{
-          backgroundColor: '#fff3bf',
-          borderLeft: '4px solid #fab005',
-          padding: '1rem',
-          marginTop: '1rem',
-          borderRadius: '4px',
+          backgroundColor: "#fff3bf",
+          borderLeft: "4px solid #fab005",
+          padding: "1rem",
+          marginTop: "1rem",
+          borderRadius: "4px",
         }}
       >
         <Text size="sm" c="dimmed">
-          <strong>Note:</strong> These are theoretical times based on VMA percentages. Actual race
-          performance depends on training, conditions, and pacing strategy. Marathon times typically
-          correspond to 75-85% VMA for trained runners.
+          <strong>Note:</strong> These are theoretical times based on VMA
+          percentages. Actual race performance depends on training, conditions,
+          and pacing strategy. Marathon times typically correspond to 75-85% VMA
+          for trained runners.
         </Text>
       </Box>
     </Card>

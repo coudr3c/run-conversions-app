@@ -1,7 +1,7 @@
-import { Card, Title, Grid, TextInput, Button, Box, Text } from '@mantine/core';
-import { useCallback, useState } from 'react';
-import type { Pace } from '../types/types';
-import * as utils from '../utils/utils';
+import { Card, Title, Grid, TextInput, Button, Box, Text } from "@mantine/core";
+import { useCallback, useState } from "react";
+import type { Pace } from "../types/types";
+import * as utils from "../utils/utils";
 
 export function SpeedConversion() {
   const [inputSpeed, setInputSpeed] = useState<number>(12);
@@ -9,30 +9,44 @@ export function SpeedConversion() {
   const [inputPaceSec, setInputPaceSec] = useState<number>(0);
 
   const [displayedSpeed, setDisplayedSpeed] = useState<number>(12);
-  const [displayedPace, setDisplayedPace] = useState<Pace>({ minutes: 5, seconds: 0 });
+  const [displayedPace, setDisplayedPace] = useState<Pace>({
+    minutes: 5,
+    seconds: 0,
+  });
 
   const roundToTwoDecimals = useCallback((a: number) => {
-    return utils.roundToTwoDecimals(a)
-  }, [])
+    return utils.roundToTwoDecimals(a);
+  }, []);
 
   const speedToPace = useCallback((speed: number) => {
-    return utils.speedToPace(speed)
-  }, [])
+    return utils.speedToPace(speed);
+  }, []);
 
-  const paceToSpeed = useCallback(({ minutes, seconds }: Pace) => {
-    if (minutes == 0 && seconds == 0) return 0
-    return roundToTwoDecimals(60 / (minutes + seconds / 60))
-  }, [roundToTwoDecimals])
+  const paceToSpeed = useCallback(
+    ({ minutes, seconds }: Pace) => {
+      if (minutes == 0 && seconds == 0) return 0;
+      return roundToTwoDecimals(60 / (minutes + seconds / 60));
+    },
+    [roundToTwoDecimals]
+  );
 
   const handleConvertToSpeed = () => {
-    setDisplayedPace({ minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin, seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec })
-    setDisplayedSpeed(paceToSpeed({ minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin, seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec }))
-  }
+    setDisplayedPace({
+      minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin,
+      seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec,
+    });
+    setDisplayedSpeed(
+      paceToSpeed({
+        minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin,
+        seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec,
+      })
+    );
+  };
 
   const handleConvertToPace = () => {
-    setDisplayedSpeed(isNaN(inputSpeed) ? 0 : inputSpeed)
-    setDisplayedPace(speedToPace(isNaN(inputSpeed) ? 0 : inputSpeed))
-  }
+    setDisplayedSpeed(isNaN(inputSpeed) ? 0 : inputSpeed);
+    setDisplayedPace(speedToPace(isNaN(inputSpeed) ? 0 : inputSpeed));
+  };
 
   return (
     <Card shadow="sm" padding="xl" radius="md">
@@ -45,11 +59,13 @@ export function SpeedConversion() {
           <TextInput
             value={inputSpeed}
             onChange={(event) => {
-              if (event.currentTarget.value == '') {
-                setInputSpeed(NaN)
+              if (event.currentTarget.value == "") {
+                setInputSpeed(NaN);
               }
-              setInputSpeed(roundToTwoDecimals(parseFloat(event.currentTarget.value)))}
-            }
+              setInputSpeed(
+                roundToTwoDecimals(parseFloat(event.currentTarget.value))
+              );
+            }}
             label="Speed (km/h)"
             placeholder="12.0"
             type="number"
@@ -66,41 +82,41 @@ export function SpeedConversion() {
           <Text size="sm" fw={500} mb="xs">
             Pace (min/km)
           </Text>
-          <Box style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <TextInput
               value={inputPaceMin}
               onChange={(event) => {
-                if (event.currentTarget.value == '') {
-                  setInputPaceMin(NaN)
+                if (event.currentTarget.value == "") {
+                  setInputPaceMin(NaN);
                 }
-                const v = parseInt(event.currentTarget.value)
+                const v = parseInt(event.currentTarget.value);
                 if (v >= 0 && v < 60) {
-                  setInputPaceMin(v)
+                  setInputPaceMin(v);
                 }
               }}
               placeholder="5"
               type="number"
               min={0}
               max={59}
-              style={{ width: '80px' }}
+              style={{ width: "80px" }}
             />
             <Text>:</Text>
             <TextInput
               value={inputPaceSec}
               onChange={(event) => {
-                if (event.currentTarget.value == '') {
-                  setInputPaceSec(NaN)
+                if (event.currentTarget.value == "") {
+                  setInputPaceSec(NaN);
                 }
-                const v = parseInt(event.currentTarget.value)
+                const v = parseInt(event.currentTarget.value);
                 if (v >= 0 && v < 60) {
-                  setInputPaceSec(v)
+                  setInputPaceSec(v);
                 }
               }}
               placeholder="00"
               type="number"
               min={0}
               max={59}
-              style={{ width: '80px' }}
+              style={{ width: "80px" }}
             />
           </Box>
           <Button fullWidth mt="sm" onClick={handleConvertToSpeed}>
@@ -111,18 +127,19 @@ export function SpeedConversion() {
 
       <Box
         style={{
-          backgroundColor: '#e7f5ff',
-          border: '1px solid #a5d8ff',
-          borderRadius: '4px',
-          padding: '1rem',
-          marginTop: '1rem',
+          backgroundColor: "#e7f5ff",
+          border: "1px solid #a5d8ff",
+          borderRadius: "4px",
+          padding: "1rem",
+          marginTop: "1rem",
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
           Result
         </Text>
         <Text size="xl" fw={700} c="#1864ab">
-          {displayedSpeed} km/h = {displayedPace.minutes}:{String(displayedPace.seconds).padStart(2, '0')} min/km
+          {displayedSpeed} km/h = {displayedPace.minutes}:
+          {String(displayedPace.seconds).padStart(2, "0")} min/km
         </Text>
       </Box>
     </Card>

@@ -1,30 +1,58 @@
-import { Card, Title, TextInput, Button, Box, Text, Grid, Table, Badge, Divider } from '@mantine/core';
-import { useMemo, useState } from 'react';
+import {
+  Card,
+  Title,
+  TextInput,
+  Button,
+  Box,
+  Text,
+  Grid,
+  Table,
+  Badge,
+  Divider,
+} from "@mantine/core";
+import { useMemo, useState } from "react";
 
 export function HeartRateZones() {
-  const [heartRateMin, setHeartRateMin] = useState<number>(60)
-  const [heartRateMax, setHeartRateMax] = useState<number>(190)
-  const [heartRateReserve, setHeartRateReserve] = useState<number>(130)
+  const [heartRateMin, setHeartRateMin] = useState<number>(60);
+  const [heartRateMax, setHeartRateMax] = useState<number>(190);
+  const [heartRateReserve, setHeartRateReserve] = useState<number>(130);
 
   const data = useMemo(() => {
     const zones = [
-      { name: 'Z1', focus: 'Recovery, warm-up, cool-down', color: 'grey' },
-      { name: 'Z2', focus: 'Endurance base building, easy runs', color: 'teal' },
-      { name: 'Z3', focus: 'Tempo runs, aerobic development', color: 'green' },
-      { name: 'Z4', focus: 'Lactate threshold, race pace', color: 'orange' },
-      { name: 'Z5', focus: 'VO2max intervals, high intensity', color: 'red' },
-    ]
-    return [[0.5, 0.6], [0.6, 0.7], [0.7, 0.8], [0.8, 0.9], [0.9, 1]].map(([from, to], idx) => {
-      const zone = zones[idx]
+      { name: "Z1", focus: "Recovery, warm-up, cool-down", color: "grey" },
+      {
+        name: "Z2",
+        focus: "Endurance base building, easy runs",
+        color: "teal",
+      },
+      { name: "Z3", focus: "Tempo runs, aerobic development", color: "green" },
+      { name: "Z4", focus: "Lactate threshold, race pace", color: "orange" },
+      { name: "Z5", focus: "VO2max intervals, high intensity", color: "red" },
+    ];
+    return [
+      [0.5, 0.6],
+      [0.6, 0.7],
+      [0.7, 0.8],
+      [0.8, 0.9],
+      [0.9, 1],
+    ].map(([from, to], idx) => {
+      const zone = zones[idx];
       return {
         zone: zone.name,
-        percentage: from * 100 + '-' + to * 100 + '%',
-        range: Math.round(isNaN(heartRateMin) ? 0 : heartRateMin + (from * heartRateReserve)) + '-' + Math.round(isNaN(heartRateMin) ? 0 : heartRateMin + (to * heartRateReserve)),
+        percentage: from * 100 + "-" + to * 100 + "%",
+        range:
+          Math.round(
+            isNaN(heartRateMin) ? 0 : heartRateMin + from * heartRateReserve
+          ) +
+          "-" +
+          Math.round(
+            isNaN(heartRateMin) ? 0 : heartRateMin + to * heartRateReserve
+          ),
         focus: zone.focus,
-        color: zone.color
-      }
-    })
-    }, [heartRateMin, heartRateReserve])
+        color: zone.color,
+      };
+    });
+  }, [heartRateMin, heartRateReserve]);
 
   return (
     <Card shadow="sm" padding="xl" radius="md">
@@ -37,12 +65,12 @@ export function HeartRateZones() {
           <TextInput
             value={heartRateMin}
             onChange={(event) => {
-              const v = parseInt(event.currentTarget.value)
+              const v = parseInt(event.currentTarget.value);
               if (!isNaN(v) && v >= 0) {
-                setHeartRateMin(v)
-                setHeartRateReserve(Math.max(heartRateMax - v, 0))
+                setHeartRateMin(v);
+                setHeartRateReserve(Math.max(heartRateMax - v, 0));
               } else {
-                setHeartRateMin(NaN)
+                setHeartRateMin(NaN);
               }
             }}
             label="Resting Heart Rate (bpm)"
@@ -56,12 +84,12 @@ export function HeartRateZones() {
           <TextInput
             value={heartRateMax}
             onChange={(event) => {
-              const v = parseInt(event.currentTarget.value)
+              const v = parseInt(event.currentTarget.value);
               if (!isNaN(v) && v >= 0) {
-                setHeartRateMax(v)
-                setHeartRateReserve(Math.max(v - heartRateMin, 0))
+                setHeartRateMax(v);
+                setHeartRateReserve(Math.max(v - heartRateMin, 0));
               } else {
-                setHeartRateMax(NaN)
+                setHeartRateMax(NaN);
               }
             }}
             label="Maximum Heart Rate (bpm)"
@@ -76,11 +104,11 @@ export function HeartRateZones() {
 
       <Box
         style={{
-          backgroundColor: '#fff3bf',
-          borderLeft: '4px solid #fab005',
-          padding: '1rem',
-          marginTop: '1.5rem',
-          borderRadius: '4px',
+          backgroundColor: "#fff3bf",
+          borderLeft: "4px solid #fab005",
+          padding: "1rem",
+          marginTop: "1.5rem",
+          borderRadius: "4px",
         }}
       >
         <Text size="sm" c="dimmed">
@@ -98,7 +126,7 @@ export function HeartRateZones() {
         Training Zones
       </Title>
 
-      <Box style={{ overflowX: 'auto' }}>
+      <Box style={{ overflowX: "auto" }}>
         <Table striped highlightOnHover>
           <Table.Thead>
             <Table.Tr>
@@ -127,15 +155,16 @@ export function HeartRateZones() {
 
       <Box
         style={{
-          backgroundColor: '#fff3bf',
-          borderLeft: '4px solid #fab005',
-          padding: '1rem',
-          marginTop: '1.5rem',
-          borderRadius: '4px',
+          backgroundColor: "#fff3bf",
+          borderLeft: "4px solid #fab005",
+          padding: "1rem",
+          marginTop: "1.5rem",
+          borderRadius: "4px",
         }}
       >
         <Text size="sm" c="dimmed">
-          <strong>Example calculation:</strong> With Resting HR = 60 and Max HR = 190
+          <strong>Example calculation:</strong> With Resting HR = 60 and Max HR
+          = 190
           <br />
           HR Reserve = 190 - 60 = 130 bpm
           <br />

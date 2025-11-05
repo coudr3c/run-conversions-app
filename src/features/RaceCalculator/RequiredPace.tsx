@@ -1,7 +1,7 @@
-import { Box, Button, Text, TextInput, Title } from '@mantine/core';
-import { useCallback, useState } from 'react';
-import type { Pace, Time } from '../../types/types';
-import * as utils from '../../utils/utils';
+import { Box, Button, Text, TextInput, Title } from "@mantine/core";
+import { useCallback, useState } from "react";
+import type { Pace, Time } from "../../types/types";
+import * as utils from "../../utils/utils";
 
 interface RequiredPaceProps {
   distance: number;
@@ -16,46 +16,56 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
   const [displayedM, setDisplayedM] = useState<number>(25);
   const [displayedS, setDisplayedS] = useState<number>(0);
 
-  const [displayedPace, setDisplayedPace] = useState<Pace>({ minutes: 5, seconds: 0 });
+  const [displayedPace, setDisplayedPace] = useState<Pace>({
+    minutes: 5,
+    seconds: 0,
+  });
   const [displayedSpeed, setDisplayedSpeed] = useState<number>(12);
 
+  const [displayedDistance, setDisplayedDistance] = useState<number>(distance);
+
   const roundToTwoDecimals = useCallback((a: number) => {
-    return utils.roundToTwoDecimals(a)
-  }, [])
+    return utils.roundToTwoDecimals(a);
+  }, []);
 
   const timeMinSecToBase10 = useCallback((time: Time) => {
-    return utils.timeMinSecToBase10(time)
-  }, [])
+    return utils.timeMinSecToBase10(time);
+  }, []);
 
   const paceBase10ToMinSec = useCallback((pace: number) => {
-    return utils.paceBase10ToMinSec(pace)
-  }, [])
+    return utils.paceBase10ToMinSec(pace);
+  }, []);
 
   const handleCalculate = () => {
-    const h = isNaN(inputH) ? 0 : inputH
-    const m = isNaN(inputM) ? 0 : inputM
-    const s = isNaN(inputS) ? 0 : inputS
+    setDisplayedDistance(distance);
+    const h = isNaN(inputH) ? 0 : inputH;
+    const m = isNaN(inputM) ? 0 : inputM;
+    const s = isNaN(inputS) ? 0 : inputS;
 
-    setDisplayedH(h)
-    setDisplayedM(m)
-    setDisplayedS(s)
+    setDisplayedH(h);
+    setDisplayedM(m);
+    setDisplayedS(s);
 
     // Convert time to base10 minutes
-    const totalTimeBase10 = timeMinSecToBase10({ hours: h, minutes: m, seconds: s })
+    const totalTimeBase10 = timeMinSecToBase10({
+      hours: h,
+      minutes: m,
+      seconds: s,
+    });
 
     // Calculate pace (time per km)
-    const paceBase10 = totalTimeBase10 / distance
-    const pace = paceBase10ToMinSec(paceBase10)
-    setDisplayedPace(pace)
+    const paceBase10 = totalTimeBase10 / distance;
+    const pace = paceBase10ToMinSec(paceBase10);
+    setDisplayedPace(pace);
 
     // Calculate speed (km/h)
     if (totalTimeBase10 === 0) {
-      setDisplayedSpeed(0)
+      setDisplayedSpeed(0);
     } else {
-      const speed = roundToTwoDecimals((distance * 60) / totalTimeBase10)
-      setDisplayedSpeed(speed)
+      const speed = roundToTwoDecimals((distance * 60) / totalTimeBase10);
+      setDisplayedSpeed(speed);
     }
-  }
+  };
 
   return (
     <>
@@ -66,84 +76,90 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
         Enter your target finish time to calculate required pace/speed
       </Text>
 
-      <Box style={{ maxWidth: '300px' }}>
+      <Box style={{ maxWidth: "300px" }}>
         <Text size="sm" fw={500} mb="xs">
           Target Time (HH:MM:SS)
         </Text>
-        <Box style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
           <TextInput
             value={inputH}
             onChange={(event) => {
-              if (event.currentTarget.value == '') {
-                setInputH(NaN)
+              if (event.currentTarget.value == "") {
+                setInputH(NaN);
               }
-              const v = parseInt(event.currentTarget.value)
+              const v = parseInt(event.currentTarget.value);
               if (v >= 0) {
-                setInputH(v)
+                setInputH(v);
               }
             }}
             placeholder="0"
             type="number"
             min={0}
-            style={{ width: '80px' }}
+            style={{ width: "80px" }}
           />
           <Text>:</Text>
           <TextInput
             value={inputM}
             onChange={(event) => {
-              if (event.currentTarget.value == '') {
-                setInputM(NaN)
+              if (event.currentTarget.value == "") {
+                setInputM(NaN);
               }
-              const v = parseInt(event.currentTarget.value)
+              const v = parseInt(event.currentTarget.value);
               if (v >= 0 && v < 60) {
-                setInputM(v)
+                setInputM(v);
               }
             }}
             placeholder="25"
             type="number"
             min={0}
             max={59}
-            style={{ width: '80px' }}
+            style={{ width: "80px" }}
           />
           <Text>:</Text>
           <TextInput
             value={inputS}
             onChange={(event) => {
-              if (event.currentTarget.value == '') {
-                setInputS(NaN)
+              if (event.currentTarget.value == "") {
+                setInputS(NaN);
               }
-              const v = parseInt(event.currentTarget.value)
+              const v = parseInt(event.currentTarget.value);
               if (v >= 0 && v < 60) {
-                setInputS(v)
+                setInputS(v);
               }
             }}
             placeholder="00"
             type="number"
             min={0}
             max={59}
-            style={{ width: '80px' }}
+            style={{ width: "80px" }}
           />
         </Box>
       </Box>
-      <Button mt="md" onClick={handleCalculate}>Calculate Required Speed</Button>
+      <Button mt="md" onClick={handleCalculate}>
+        Calculate Required Speed
+      </Button>
 
       <Box
         style={{
-          backgroundColor: '#e7f5ff',
-          border: '1px solid #a5d8ff',
-          borderRadius: '4px',
-          padding: '1rem',
-          marginTop: '1rem',
+          backgroundColor: "#e7f5ff",
+          border: "1px solid #a5d8ff",
+          borderRadius: "4px",
+          padding: "1rem",
+          marginTop: "1rem",
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
           Required Pace & Speed
         </Text>
         <Text size="xl" fw={700} c="#1864ab">
-          {displayedPace.minutes}:{String(Math.floor(displayedPace.seconds)).padStart(2, '0')} min/km ({displayedSpeed} km/h)
+          {displayedPace.minutes}:
+          {String(Math.floor(displayedPace.seconds)).padStart(2, "0")} min/km (
+          {displayedSpeed} km/h)
         </Text>
         <Text size="sm" c="#1971c2" mt="xs">
-          To finish {distance} km in {displayedH}:{String(displayedM).padStart(2, '0')}:{String(displayedS).padStart(2, '0')}
+          To finish {displayedDistance} km in {displayedH}:
+          {String(displayedM).padStart(2, "0")}:
+          {String(displayedS).padStart(2, "0")}
         </Text>
       </Box>
     </>

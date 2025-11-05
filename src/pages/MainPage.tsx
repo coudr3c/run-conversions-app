@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Container, Tabs } from '@mantine/core';
-import { SpeedConversion } from '../features/SpeedConversion';
-import { VMACalculator } from '../features/VMACalculator';
-import { RaceCalculator } from '../features/RaceCalculator/RaceCalculator';
-import { HeartRateZones } from '../features/HeartRateZones';
+import { useState } from "react";
+import { Container, Tabs } from "@mantine/core";
+import { SpeedConversion } from "../features/SpeedConversion";
+import { VMACalculator } from "../features/VMACalculator";
+import { RaceCalculator } from "../features/RaceCalculator/RaceCalculator";
+import { HeartRateZones } from "../features/HeartRateZones";
 
 export function MainPage() {
-  const [activeTab, setActiveTab] = useState<string | null>('speed-conversion');
+  const [activeTab, setActiveTab] = useState<string | null>("speed-conversion");
 
   return (
     <Container size="lg" py="xl">
