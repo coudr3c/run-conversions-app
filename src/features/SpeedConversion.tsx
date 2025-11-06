@@ -1,5 +1,5 @@
-import { Card, Title, Grid, TextInput, Button, Box, Text } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { Card, Title, Grid, TextInput, Box, Text } from "@mantine/core";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Pace } from "../types/types";
 import * as utils from "../utils/utils";
@@ -17,13 +17,16 @@ export function SpeedConversion() {
     minutes: 5,
     seconds: 0,
   });
-
-  const roundToTwoDecimals = useCallback((a: number) => {
-    return utils.roundToTwoDecimals(a);
-  }, []);
-
+  
+  const [isLastInputUpdatedPace, setIsLastInputUpdatedPace] =
+  useState<boolean>(false);
+  
   const speedToPace = useCallback((speed: number) => {
     return utils.speedToPace(speed);
+  }, []);
+  
+  const roundToTwoDecimals = useCallback((a: number) => {
+    return utils.roundToTwoDecimals(a);
   }, []);
 
   const paceToSpeed = useCallback(
@@ -34,23 +37,23 @@ export function SpeedConversion() {
     [roundToTwoDecimals]
   );
 
-  const handleConvertToSpeed = () => {
-    setDisplayedPace({
-      minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin,
-      seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec,
-    });
-    setDisplayedSpeed(
-      paceToSpeed({
+  useEffect(() => {
+    if (isLastInputUpdatedPace) {
+      setDisplayedPace({
         minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin,
         seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec,
-      })
-    );
-  };
-
-  const handleConvertToPace = () => {
-    setDisplayedSpeed(isNaN(inputSpeed) ? 0 : inputSpeed);
-    setDisplayedPace(speedToPace(isNaN(inputSpeed) ? 0 : inputSpeed));
-  };
+      });
+      setDisplayedSpeed(
+        paceToSpeed({
+          minutes: isNaN(inputPaceMin) ? 0 : inputPaceMin,
+          seconds: isNaN(inputPaceSec) ? 0 : inputPaceSec,
+        })
+      );
+    } else {
+      setDisplayedSpeed(isNaN(inputSpeed) ? 0 : inputSpeed);
+      setDisplayedPace(speedToPace(isNaN(inputSpeed) ? 0 : inputSpeed));
+    }
+  }, [inputSpeed, inputPaceMin, inputPaceSec, isLastInputUpdatedPace, paceToSpeed, speedToPace]);
 
   return (
     <Card shadow="sm" padding="xl" radius="md">
@@ -59,43 +62,51 @@ export function SpeedConversion() {
       </Title>
 
       <Grid mb="lg">
-        <Grid.Col span={{ base: 12, md: 6 }}>
+        <Grid.Col span={{ base: 12, md: 6 }} style={{ borderLeft: `4px solid ${!isLastInputUpdatedPace ? "#1971c2" : "#ccc"}`, paddingLeft: "1rem" }}>
+          <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.5rem" }}>
+            <Text size="sm" fw={500}>
+              {tCommon("labels.speed")}
+            </Text>
+          </Box>
           <TextInput
             value={inputSpeed}
+            onFocus={() => setIsLastInputUpdatedPace(false)}
             onChange={(event) => {
+              setIsLastInputUpdatedPace(false);
               if (event.currentTarget.value == "") {
                 setInputSpeed(NaN);
+              } else {
+                const v = roundToTwoDecimals(parseFloat(event.currentTarget.value));
+                if (v >= 0 && v < 100) setInputSpeed(v);
               }
-              setInputSpeed(
-                roundToTwoDecimals(parseFloat(event.currentTarget.value))
-              );
             }}
-            label={tCommon("labels.speed")}
             placeholder="12.0"
             type="number"
             step={0.1}
             min={0}
             max={30}
           />
-          <Button fullWidth mt="sm" onClick={handleConvertToPace}>
-            {tCommon("buttons.convertToPace")}
-          </Button>
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, md: 6 }}>
-          <Text size="sm" fw={500} mb="xs">
-            {tCommon("labels.pace")}
-          </Text>
+        <Grid.Col span={{ base: 12, md: 6 }} style={{ borderLeft: `4px solid ${isLastInputUpdatedPace ? "#1971c2" : "#ccc"}`, paddingLeft: "1rem" }}>
+          <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.5rem" }}>
+            <Text size="sm" fw={500}>
+              {tCommon("labels.pace")}
+            </Text>
+          </Box>
           <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <TextInput
               value={inputPaceMin}
+              onFocus={() => setIsLastInputUpdatedPace(true)}
               onChange={(event) => {
+                setIsLastInputUpdatedPace(true);
                 if (event.currentTarget.value == "") {
                   setInputPaceMin(NaN);
-                }
-                const v = parseInt(event.currentTarget.value);
-                if (v >= 0 && v < 60) {
-                  setInputPaceMin(v);
+                } else {
+                  const v = parseInt(event.currentTarget.value);
+                  if (v >= 0 && v < 60) {
+                    setInputPaceMin(v);
+                  }
                 }
               }}
               placeholder="5"
@@ -107,13 +118,16 @@ export function SpeedConversion() {
             <Text>:</Text>
             <TextInput
               value={inputPaceSec}
+              onFocus={() => setIsLastInputUpdatedPace(true)}
               onChange={(event) => {
+                setIsLastInputUpdatedPace(true);
                 if (event.currentTarget.value == "") {
                   setInputPaceSec(NaN);
-                }
-                const v = parseInt(event.currentTarget.value);
-                if (v >= 0 && v < 60) {
-                  setInputPaceSec(v);
+                } else {
+                  const v = parseInt(event.currentTarget.value);
+                  if (v >= 0 && v < 60) {
+                    setInputPaceSec(v);
+                  }
                 }
               }}
               placeholder="00"
@@ -123,9 +137,6 @@ export function SpeedConversion() {
               style={{ width: "80px" }}
             />
           </Box>
-          <Button fullWidth mt="sm" onClick={handleConvertToSpeed}>
-            {tCommon("buttons.convertToSpeed")}
-          </Button>
         </Grid.Col>
       </Grid>
 

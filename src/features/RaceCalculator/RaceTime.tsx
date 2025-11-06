@@ -1,5 +1,5 @@
-import { Box, Button, Grid, Text, TextInput, Title } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { Box, Grid, Text, TextInput, Title } from "@mantine/core";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Pace, Time } from "../../types/types";
 import * as utils from "../../utils/utils";
@@ -28,22 +28,23 @@ export function RaceTime({ distance }: RaceTimeProps) {
   });
   const [displayedDistance, setDisplayedDistance] = useState<number>(distance);
 
+  
   const roundToTwoDecimals = useCallback((a: number) => {
     return utils.roundToTwoDecimals(a);
   }, []);
-
+  
   const paceMinSecToBase10 = useCallback((pace: Pace) => {
     return utils.paceMinSecToBase10(pace);
   }, []);
-
+  
   const timeBase10ToMinSec = useCallback((time: number) => {
     return utils.timeBase10ToMinSec(time);
   }, []);
-
+  
   const speedToPace = useCallback((speed: number) => {
     return utils.speedToPace(speed);
   }, []);
-
+  
   const paceToSpeed = useCallback(
     ({ minutes, seconds }: Pace) => {
       if (minutes == 0 && seconds == 0) return 0;
@@ -51,8 +52,8 @@ export function RaceTime({ distance }: RaceTimeProps) {
     },
     [roundToTwoDecimals]
   );
-
-  const handleCalculate = () => {
+  
+  useEffect(() => {
     setDisplayedDistance(distance);
     let paceMin, paceSec, speed;
 
@@ -79,8 +80,18 @@ export function RaceTime({ distance }: RaceTimeProps) {
     const totalTimeBase10 = paceBase10 * distance;
     const time = timeBase10ToMinSec(totalTimeBase10);
     setDisplayedTime(time);
-  };
-
+  }, [
+    distance,
+    inputPaceMin,
+    inputPaceSec,
+    inputSpeed,
+    isLastInputUpdatedPace,
+    paceToSpeed,
+    speedToPace,
+    paceMinSecToBase10,
+    timeBase10ToMinSec,
+  ]);
+  
   return (
     <>
       <Title order={3} size="h4" mb="xs">
@@ -91,21 +102,25 @@ export function RaceTime({ distance }: RaceTimeProps) {
       </Text>
 
       <Grid mb="md">
-        <Grid.Col span={{ base: 12, md: 6 }}>
-          <Text size="sm" fw={500} mb="xs">
-            {tCommon("labels.target_pace")}
-          </Text>
+        <Grid.Col span={{ base: 12, md: 6 }} style={{ borderLeft: `4px solid ${isLastInputUpdatedPace ? "#1971c2" : "#ccc"}`, paddingLeft: "1rem" }}>
+          <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.5rem" }}>
+            <Text size="sm" fw={500}>
+              {tCommon("labels.target_pace")}
+            </Text>
+          </Box>
           <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <TextInput
               value={inputPaceMin}
+              onFocus={() => setIsLastInputUpdatedPace(true)}
               onChange={(event) => {
+                setIsLastInputUpdatedPace(true);
                 if (event.currentTarget.value == "") {
                   setInputPaceMin(NaN);
-                }
-                const v = parseInt(event.currentTarget.value);
-                if (v >= 0 && v < 60) {
-                  setIsLastInputUpdatedPace(true);
-                  setInputPaceMin(v);
+                } else {
+                  const v = parseInt(event.currentTarget.value);
+                  if (v >= 0 && v < 60) {
+                    setInputPaceMin(v);
+                  }
                 }
               }}
               placeholder="5"
@@ -117,14 +132,16 @@ export function RaceTime({ distance }: RaceTimeProps) {
             <Text>:</Text>
             <TextInput
               value={inputPaceSec}
+              onFocus={() => setIsLastInputUpdatedPace(true)}
               onChange={(event) => {
+                setIsLastInputUpdatedPace(true);
                 if (event.currentTarget.value == "") {
                   setInputPaceSec(NaN);
-                }
-                const v = parseInt(event.currentTarget.value);
-                if (v >= 0 && v < 60) {
-                  setIsLastInputUpdatedPace(true);
-                  setInputPaceSec(v);
+                } else {
+                  const v = parseInt(event.currentTarget.value);
+                  if (v >= 0 && v < 60) {
+                    setInputPaceSec(v);
+                  }
                 }
               }}
               placeholder="00"
@@ -136,29 +153,31 @@ export function RaceTime({ distance }: RaceTimeProps) {
           </Box>
         </Grid.Col>
 
-        <Grid.Col span={{ base: 12, md: 6 }}>
+        <Grid.Col span={{ base: 12, md: 6 }} style={{ borderLeft: `4px solid ${!isLastInputUpdatedPace ? "#1971c2" : "#ccc"}`, paddingLeft: "1rem" }}>
+          <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.5rem" }}>
+            <Text size="sm" fw={500}>
+              {tCommon("labels.target_speed")}
+            </Text>
+          </Box>
           <TextInput
             value={inputSpeed}
+            onFocus={() => setIsLastInputUpdatedPace(false)}
             onChange={(event) => {
+              setIsLastInputUpdatedPace(false);
               if (event.currentTarget.value == "") {
                 setInputSpeed(NaN);
+              } else {
+                setInputSpeed(
+                  roundToTwoDecimals(parseFloat(event.currentTarget.value))
+                );
               }
-              setIsLastInputUpdatedPace(false);
-              setInputSpeed(
-                roundToTwoDecimals(parseFloat(event.currentTarget.value))
-              );
             }}
-            label={tCommon("labels.target_speed")}
             placeholder="12.0"
             type="number"
             step={0.1}
           />
         </Grid.Col>
       </Grid>
-
-      <Button mt="sm" onClick={handleCalculate}>
-        {tCommon("buttons.calculate_finish_time")}
-      </Button>
 
       <Box
         style={{
