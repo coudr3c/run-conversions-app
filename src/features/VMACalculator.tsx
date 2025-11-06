@@ -8,10 +8,14 @@ import {
   Divider,
 } from "@mantine/core";
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Pace, Time } from "../types/types";
 import * as utils from "../utils/utils";
 
 export function VMACalculator() {
+  const { t } = useTranslation("features");
+  const { t: tCommon } = useTranslation("common");
+
   const [inputSpeed, setInputSpeed] = useState<number>(12);
 
   const roundToTwoDecimals = useCallback((a: number) => {
@@ -60,7 +64,7 @@ export function VMACalculator() {
   return (
     <Card shadow="sm" padding="xl" radius="md">
       <Title order={2} mb="lg">
-        VMA (Vitesse Maximale Aérobie) Calculator
+        {t("vmaCalculator.title")}
       </Title>
 
       <TextInput
@@ -73,7 +77,7 @@ export function VMACalculator() {
             roundToTwoDecimals(parseFloat(event.currentTarget.value))
           );
         }}
-        label="Your VMA (km/h)"
+        label={tCommon("labels.your_vma")}
         placeholder="16.0"
         type="number"
         step={0.1}
@@ -90,34 +94,34 @@ export function VMACalculator() {
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
-          Estimated VO2max
+          {tCommon("labels.estimated_vo2max")}
         </Text>
         <Text size="xl" fw={700} c="#1864ab">
-          {inputSpeed * 3.5} ml/kg/min
+          {inputSpeed * 3.5} {tCommon("units.vo2")}
         </Text>
         <Text size="xs" c="dimmed" mt="xs">
-          Formula: VO2max ≈ VMA × 3.5
+          {t("vmaCalculator.formula")}
         </Text>
       </Box>
 
       <Divider my="xl" />
 
       <Title order={3} size="h4" mb="md">
-        Race Times by VMA Percentage
+        {t("vmaCalculator.section_title")}
       </Title>
 
       <Box style={{ overflowX: "auto" }}>
         <Table striped highlightOnHover>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th>% VMA</Table.Th>
-              <Table.Th>Speed (km/h)</Table.Th>
-              <Table.Th>Pace (min/km)</Table.Th>
-              <Table.Th>5 km</Table.Th>
-              <Table.Th>10 km</Table.Th>
-              <Table.Th>20 km</Table.Th>
-              <Table.Th>Half Marathon (21.1 km)</Table.Th>
-              <Table.Th>Marathon (42.2 km)</Table.Th>
+              <Table.Th>{t("vmaTable.vma_percent")}</Table.Th>
+              <Table.Th>{t("vmaTable.speed")}</Table.Th>
+              <Table.Th>{t("vmaTable.pace")}</Table.Th>
+              <Table.Th>{t("vmaTable.5km")}</Table.Th>
+              <Table.Th>{t("vmaTable.10km")}</Table.Th>
+              <Table.Th>{t("vmaTable.20km")}</Table.Th>
+              <Table.Th>{t("vmaTable.half_marathon")}</Table.Th>
+              <Table.Th>{t("vmaTable.marathon")}</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -147,10 +151,7 @@ export function VMACalculator() {
         }}
       >
         <Text size="sm" c="dimmed">
-          <strong>Note:</strong> These are theoretical times based on VMA
-          percentages. Actual race performance depends on training, conditions,
-          and pacing strategy. Marathon times typically correspond to 75-85% VMA
-          for trained runners.
+          <strong>{t("vmaCalculator.note")}</strong> {t("vmaCalculator.disclaimer")}
         </Text>
       </Box>
     </Card>

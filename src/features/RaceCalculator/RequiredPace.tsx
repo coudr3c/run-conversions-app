@@ -1,5 +1,6 @@
 import { Box, Button, Text, TextInput, Title } from "@mantine/core";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Pace, Time } from "../../types/types";
 import * as utils from "../../utils/utils";
 
@@ -8,6 +9,9 @@ interface RequiredPaceProps {
 }
 
 export function RequiredPace({ distance }: RequiredPaceProps) {
+  const { t } = useTranslation("features");
+  const { t: tCommon } = useTranslation("common");
+
   const [inputH, setInputH] = useState<number>(0);
   const [inputM, setInputM] = useState<number>(25);
   const [inputS, setInputS] = useState<number>(0);
@@ -70,15 +74,15 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
   return (
     <>
       <Title order={3} size="h4" mb="xs">
-        Calculate Required Speed
+        {t("requiredPace.title")}
       </Title>
       <Text size="sm" c="dimmed" mb="md">
-        Enter your target finish time to calculate required pace/speed
+        {t("requiredPace.description")}
       </Text>
 
       <Box style={{ maxWidth: "300px" }}>
         <Text size="sm" fw={500} mb="xs">
-          Target Time (HH:MM:SS)
+          {tCommon("labels.target_time")}
         </Text>
         <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
           <TextInput
@@ -136,7 +140,7 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
         </Box>
       </Box>
       <Button mt="md" onClick={handleCalculate}>
-        Calculate Required Speed
+        {tCommon("buttons.calculate_required_speed")}
       </Button>
 
       <Box
@@ -149,15 +153,15 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
-          Required Pace & Speed
+          {t("requiredPace.result_label")}
         </Text>
         <Text size="xl" fw={700} c="#1864ab">
           {displayedPace.minutes}:
-          {String(Math.floor(displayedPace.seconds)).padStart(2, "0")} min/km (
-          {displayedSpeed} km/h)
+          {String(Math.floor(displayedPace.seconds)).padStart(2, "0")} {tCommon("units.minkm")} (
+          {displayedSpeed} {tCommon("units.kmh")})
         </Text>
         <Text size="sm" c="#1971c2" mt="xs">
-          To finish {displayedDistance} km in {displayedH}:
+          {t("requiredPace.to_finish")} {displayedDistance} {tCommon("units.km")} {tCommon("formatting.in")} {displayedH}:
           {String(displayedM).padStart(2, "0")}:
           {String(displayedS).padStart(2, "0")}
         </Text>

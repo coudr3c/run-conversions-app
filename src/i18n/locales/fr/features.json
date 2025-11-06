@@ -1,0 +1,75 @@
+{
+  "tabs": {
+    "speedConversion": "Conversion Vitesse/Allure",
+    "vmaCalculator": "Calculatrice VMA",
+    "raceCalculator": "Temps de course/Vitesse",
+    "heartRateZones": "Zones de FC"
+  },
+  "speedConversion": {
+    "title": "Conversion Vitesse ⇄ Allure"
+  },
+  "vmaCalculator": {
+    "title": "Calculatrice VMA (Vitesse Maximale Aérobie)",
+    "formula": "Formule : VO2max ≈ VMA × 3,5",
+    "section_title": "Temps de course par pourcentage VMA",
+    "note": "Note :",
+    "disclaimer": "Ce sont des temps théoriques maximums. La performance réelle en course dépend de la condition physique, du terrain, de la météo et de la stratégie de course."
+  },
+  "vmaTable": {
+    "vma_percent": "% VMA",
+    "speed": "Vitesse (km/h)",
+    "pace": "Allure (min/km)",
+    "5km": "5 km",
+    "10km": "10 km",
+    "20km": "20 km",
+    "half_marathon": "Semi-marathon (21,1 km)",
+    "marathon": "Marathon (42,2 km)"
+  },
+  "heartRateZones": {
+    "title": "Calculatrice des zones de fréquence cardiaque",
+    "method_title": "Méthode de la réserve de FC (Formule de Karvonen)",
+    "hr_reserve_formula": "Réserve FC = FC max - FC repos",
+    "target_hr_formula": "FC cible = (Réserve FC × Intensité %) + FC repos",
+    "section_title": "Zones d'entraînement",
+    "example_calculation": "Exemple de calcul :"
+  },
+  "hrZonesTable": {
+    "zone": "Zone",
+    "percent_reserve": "% de la réserve",
+    "hr_range": "Plage FC (bpm)",
+    "training_focus": "Objectif d'entraînement",
+    "z1": "Z1",
+    "z2": "Z2",
+    "z3": "Z3",
+    "z4": "Z4",
+    "z5": "Z5",
+    "recovery": "Récupération, échauffement, refroidissement",
+    "endurance": "Construction d'endurance, courses faciles",
+    "tempo": "Courses tempo, développement aérobie",
+    "lactate": "Seuil lactique, allure de course",
+    "vo2max": "Intervalles VO2max, haute intensité"
+  },
+  "raceCalculator": {
+    "title": "Calculatrice de temps de course/vitesse",
+    "custom_distance": "Distance personnalisée (km)"
+  },
+  "raceCalculatorDistances": {
+    "5km": "5 km",
+    "10km": "10 km",
+    "20km": "20 km",
+    "half_marathon": "Semi-marathon",
+    "marathon": "Marathon",
+    "custom": "Personnalisé"
+  },
+  "raceTime": {
+    "title": "Calculer le temps de course",
+    "description": "Entrez votre allure ou vitesse cible pour calculer le temps d'arrivée",
+    "result_label": "Temps d'arrivée estimé"
+  },
+  "requiredPace": {
+    "title": "Calculer la vitesse requise",
+    "description": "Entrez votre temps de course cible pour calculer l'allure/vitesse requise",
+    "result_label": "Allure et vitesse requises",
+    "to_finish": "Pour terminer"
+  }
+}

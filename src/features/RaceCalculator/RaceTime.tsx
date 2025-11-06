@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Text, TextInput, Title } from "@mantine/core";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Pace, Time } from "../../types/types";
 import * as utils from "../../utils/utils";
 
@@ -8,6 +9,9 @@ interface RaceTimeProps {
 }
 
 export function RaceTime({ distance }: RaceTimeProps) {
+  const { t } = useTranslation("features");
+  const { t: tCommon } = useTranslation("common");
+
   const [inputPaceMin, setInputPaceMin] = useState<number>(5);
   const [inputPaceSec, setInputPaceSec] = useState<number>(0);
   const [inputSpeed, setInputSpeed] = useState<number>(12);
@@ -80,16 +84,16 @@ export function RaceTime({ distance }: RaceTimeProps) {
   return (
     <>
       <Title order={3} size="h4" mb="xs">
-        Calculate Race Time
+        {t("raceTime.title")}
       </Title>
       <Text size="sm" c="dimmed" mb="md">
-        Enter your target pace or speed to calculate finish time
+        {t("raceTime.description")}
       </Text>
 
       <Grid mb="md">
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Text size="sm" fw={500} mb="xs">
-            Target Pace (min/km)
+            {tCommon("labels.target_pace")}
           </Text>
           <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <TextInput
@@ -144,7 +148,7 @@ export function RaceTime({ distance }: RaceTimeProps) {
                 roundToTwoDecimals(parseFloat(event.currentTarget.value))
               );
             }}
-            label="OR Target Speed (km/h)"
+            label={tCommon("labels.target_speed")}
             placeholder="12.0"
             type="number"
             step={0.1}
@@ -153,7 +157,7 @@ export function RaceTime({ distance }: RaceTimeProps) {
       </Grid>
 
       <Button mt="sm" onClick={handleCalculate}>
-        Calculate Finish Time
+        {tCommon("buttons.calculate_finish_time")}
       </Button>
 
       <Box
@@ -166,7 +170,7 @@ export function RaceTime({ distance }: RaceTimeProps) {
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
-          Estimated Finish Time
+          {t("raceTime.result_label")}
         </Text>
         <Text size="xl" fw={700} c="#1864ab">
           {displayedTime.hours}:{String(displayedTime.minutes).padStart(2, "0")}
@@ -174,7 +178,7 @@ export function RaceTime({ distance }: RaceTimeProps) {
         </Text>
         <Text size="sm" c="#1971c2" mt="xs">
           At {displayedPaceMin}:{String(displayedPaceSec).padStart(2, "0")}{" "}
-          min/km ({displayedSpeed} km/h) for {displayedDistance} km
+          {tCommon("units.minkm")} ({displayedSpeed} {tCommon("units.kmh")}) {tCommon("formatting.for")} {displayedDistance} {tCommon("units.km")}
         </Text>
       </Box>
     </>

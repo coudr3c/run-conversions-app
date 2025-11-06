@@ -11,23 +11,27 @@ import {
   Divider,
 } from "@mantine/core";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function HeartRateZones() {
+  const { t } = useTranslation("features");
+  const { t: tCommon } = useTranslation("common");
+
   const [heartRateMin, setHeartRateMin] = useState<number>(60);
   const [heartRateMax, setHeartRateMax] = useState<number>(190);
   const [heartRateReserve, setHeartRateReserve] = useState<number>(130);
 
   const data = useMemo(() => {
     const zones = [
-      { name: "Z1", focus: "Recovery, warm-up, cool-down", color: "grey" },
+      { name: t("hrZonesTable.z1"), focus: t("hrZonesTable.recovery"), color: "grey" },
       {
-        name: "Z2",
-        focus: "Endurance base building, easy runs",
+        name: t("hrZonesTable.z2"),
+        focus: t("hrZonesTable.endurance"),
         color: "teal",
       },
-      { name: "Z3", focus: "Tempo runs, aerobic development", color: "green" },
-      { name: "Z4", focus: "Lactate threshold, race pace", color: "orange" },
-      { name: "Z5", focus: "VO2max intervals, high intensity", color: "red" },
+      { name: t("hrZonesTable.z3"), focus: t("hrZonesTable.tempo"), color: "green" },
+      { name: t("hrZonesTable.z4"), focus: t("hrZonesTable.lactate"), color: "orange" },
+      { name: t("hrZonesTable.z5"), focus: t("hrZonesTable.vo2max"), color: "red" },
     ];
     return [
       [0.5, 0.6],
@@ -57,7 +61,7 @@ export function HeartRateZones() {
   return (
     <Card shadow="sm" padding="xl" radius="md">
       <Title order={2} mb="lg">
-        Heart Rate Zones Calculator
+        {t("heartRateZones.title")}
       </Title>
 
       <Grid mb="md">
@@ -73,7 +77,7 @@ export function HeartRateZones() {
                 setHeartRateMin(NaN);
               }
             }}
-            label="Resting Heart Rate (bpm)"
+            label={tCommon("labels.resting_hr")}
             placeholder="60"
             type="number"
             step={1}
@@ -92,7 +96,7 @@ export function HeartRateZones() {
                 setHeartRateMax(NaN);
               }
             }}
-            label="Maximum Heart Rate (bpm)"
+            label={tCommon("labels.max_hr")}
             placeholder="190"
             type="number"
             step={1}
@@ -100,7 +104,7 @@ export function HeartRateZones() {
         </Grid.Col>
       </Grid>
 
-      <Button mt="sm">Calculate HR Zones</Button>
+      <Button mt="sm">{tCommon("buttons.calculate_hr_zones")}</Button>
 
       <Box
         style={{
@@ -112,28 +116,28 @@ export function HeartRateZones() {
         }}
       >
         <Text size="sm" c="dimmed">
-          <strong>Heart Rate Reserve Method (Karvonen Formula)</strong>
+          <strong>{t("heartRateZones.method_title")}</strong>
           <br />
-          HR Reserve = Max HR - Resting HR
+          {t("heartRateZones.hr_reserve_formula")}
           <br />
-          Target HR = (HR Reserve × Intensity %) + Resting HR
+          {t("heartRateZones.target_hr_formula")}
         </Text>
       </Box>
 
       <Divider my="xl" />
 
       <Title order={3} size="h4" mb="md">
-        Training Zones
+        {t("heartRateZones.section_title")}
       </Title>
 
       <Box style={{ overflowX: "auto" }}>
         <Table striped highlightOnHover>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th>Zone</Table.Th>
-              <Table.Th>% of Reserve</Table.Th>
-              <Table.Th>Heart Rate Range (bpm)</Table.Th>
-              <Table.Th>Training Focus</Table.Th>
+              <Table.Th>{t("hrZonesTable.zone")}</Table.Th>
+              <Table.Th>{t("hrZonesTable.percent_reserve")}</Table.Th>
+              <Table.Th>{t("hrZonesTable.hr_range")}</Table.Th>
+              <Table.Th>{t("hrZonesTable.training_focus")}</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -163,8 +167,7 @@ export function HeartRateZones() {
         }}
       >
         <Text size="sm" c="dimmed">
-          <strong>Example calculation:</strong> With Resting HR = 60 and Max HR
-          = 190
+          <strong>{t("heartRateZones.example_calculation")}</strong> With Resting HR = 60 and Max HR = 190
           <br />
           HR Reserve = 190 - 60 = 130 bpm
           <br />

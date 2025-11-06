@@ -9,62 +9,59 @@ import {
   Group,
 } from "@mantine/core";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as utils from "../../utils/utils";
 import { RaceTime } from "./RaceTime";
 import { RequiredPace } from "./RequiredPace";
 
 export function RaceCalculator() {
+  const { t } = useTranslation("features");
+  const { t: tCommon } = useTranslation("common");
+
   const [selectedDistance, setSelectedDistance] = useState<number>(5);
   const [customDistance, setCustomDistance] = useState<number>(NaN);
-  const [selectedChip, setSelectedChip] = useState<string>("5 km");
+  const [selectedChip, setSelectedChip] = useState<string>(t("raceCalculatorDistances.5km"));
 
   const roundToThreeDecimals = useCallback((a: number) => {
     return utils.roundToThreeDecimals(a);
   }, []);
 
   const distances = [
-    "5 km",
-    "10 km",
-    "20 km",
-    "Half Marathon",
-    "Marathon",
-    "Custom",
+    t("raceCalculatorDistances.5km"),
+    t("raceCalculatorDistances.10km"),
+    t("raceCalculatorDistances.20km"),
+    t("raceCalculatorDistances.half_marathon"),
+    t("raceCalculatorDistances.marathon"),
+    t("raceCalculatorDistances.custom"),
   ];
 
   const handleChipChange = (value: string) => {
     setSelectedChip(value);
 
-    switch (value) {
-      case "5 km":
-        setSelectedDistance(5);
-        break;
-      case "10 km":
-        setSelectedDistance(10);
-        break;
-      case "20 km":
-        setSelectedDistance(20);
-        break;
-      case "Half Marathon":
-        setSelectedDistance(21.0975);
-        break;
-      case "Marathon":
-        setSelectedDistance(42.195);
-        break;
-      case "Custom":
-        setSelectedDistance(isNaN(customDistance) ? 0 : customDistance);
-        break;
+    if (value === t("raceCalculatorDistances.5km")) {
+      setSelectedDistance(5);
+    } else if (value === t("raceCalculatorDistances.10km")) {
+      setSelectedDistance(10);
+    } else if (value === t("raceCalculatorDistances.20km")) {
+      setSelectedDistance(20);
+    } else if (value === t("raceCalculatorDistances.half_marathon")) {
+      setSelectedDistance(21.0975);
+    } else if (value === t("raceCalculatorDistances.marathon")) {
+      setSelectedDistance(42.195);
+    } else if (value === t("raceCalculatorDistances.custom")) {
+      setSelectedDistance(isNaN(customDistance) ? 0 : customDistance);
     }
   };
 
   return (
     <Card shadow="sm" padding="xl" radius="md">
       <Title order={2} mb="lg">
-        Race Time/Speed Calculator
+        {t("raceCalculator.title")}
       </Title>
 
       <Box mb="xl">
         <Text size="sm" fw={500} mb="sm">
-          Select Distance
+          {tCommon("labels.select_distance")}
         </Text>
         <Chip.Group
           multiple={false}
@@ -95,7 +92,7 @@ export function RaceCalculator() {
               setSelectedDistance(isNaN(distance) ? 0 : distance);
             }
           }}
-          label="Custom Distance (km)"
+          label={t("raceCalculator.custom_distance")}
           placeholder="42.195"
           type="number"
           step={0.1}

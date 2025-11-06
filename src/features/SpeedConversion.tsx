@@ -1,9 +1,13 @@
 import { Card, Title, Grid, TextInput, Button, Box, Text } from "@mantine/core";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Pace } from "../types/types";
 import * as utils from "../utils/utils";
 
 export function SpeedConversion() {
+  const { t } = useTranslation("features");
+  const { t: tCommon } = useTranslation("common");
+
   const [inputSpeed, setInputSpeed] = useState<number>(12);
   const [inputPaceMin, setInputPaceMin] = useState<number>(5);
   const [inputPaceSec, setInputPaceSec] = useState<number>(0);
@@ -51,7 +55,7 @@ export function SpeedConversion() {
   return (
     <Card shadow="sm" padding="xl" radius="md">
       <Title order={2} mb="lg">
-        Speed ⇄ Pace Conversion
+        {t("speedConversion.title")}
       </Title>
 
       <Grid mb="lg">
@@ -66,7 +70,7 @@ export function SpeedConversion() {
                 roundToTwoDecimals(parseFloat(event.currentTarget.value))
               );
             }}
-            label="Speed (km/h)"
+            label={tCommon("labels.speed")}
             placeholder="12.0"
             type="number"
             step={0.1}
@@ -74,13 +78,13 @@ export function SpeedConversion() {
             max={30}
           />
           <Button fullWidth mt="sm" onClick={handleConvertToPace}>
-            Convert to Pace →
+            {tCommon("buttons.convertToPace")}
           </Button>
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 6 }}>
           <Text size="sm" fw={500} mb="xs">
-            Pace (min/km)
+            {tCommon("labels.pace")}
           </Text>
           <Box style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <TextInput
@@ -120,7 +124,7 @@ export function SpeedConversion() {
             />
           </Box>
           <Button fullWidth mt="sm" onClick={handleConvertToSpeed}>
-            ← Convert to Speed
+            {tCommon("buttons.convertToSpeed")}
           </Button>
         </Grid.Col>
       </Grid>
@@ -135,11 +139,11 @@ export function SpeedConversion() {
         }}
       >
         <Text size="xs" fw={600} tt="uppercase" c="#1971c2" mb="xs">
-          Result
+          {tCommon("labels.result")}
         </Text>
         <Text size="xl" fw={700} c="#1864ab">
-          {displayedSpeed} km/h = {displayedPace.minutes}:
-          {String(displayedPace.seconds).padStart(2, "0")} min/km
+          {displayedSpeed} {tCommon("units.kmh")} {tCommon("formatting.equals")} {displayedPace.minutes}:
+          {String(displayedPace.seconds).padStart(2, "0")} {tCommon("units.minkm")}
         </Text>
       </Box>
     </Card>

@@ -1,0 +1,38 @@
+{
+  "buttons": {
+    "calculate": "Calculer",
+    "convertToPace": "Convertir en allure →",
+    "convertToSpeed": "← Convertir en vitesse",
+    "calculate_hr_zones": "Calculer les zones FC",
+    "calculate_finish_time": "Calculer le temps de course",
+    "calculate_required_speed": "Calculer la vitesse requise"
+  },
+  "labels": {
+    "result": "Résultat",
+    "speed": "Vitesse (km/h)",
+    "pace": "Allure (min/km)",
+    "your_vma": "Votre VMA (km/h)",
+    "estimated_vo2max": "VO2max estimée",
+    "resting_hr": "Fréquence cardiaque au repos (bpm)",
+    "max_hr": "Fréquence cardiaque maximale (bpm)",
+    "target_pace": "Allure cible (min/km)",
+    "target_speed": "Vitesse cible (km/h)",
+    "target_time": "Temps cible (HH:MM:SS)",
+    "select_distance": "Sélectionner la distance"
+  },
+  "units": {
+    "kmh": "km/h",
+    "minkm": "min/km",
+    "bpm": "bpm",
+    "vo2": "ml/kg/min",
+    "km": "km"
+  },
+  "formatting": {
+    "equals": "=",
+    "or": "ou",
+    "of": "de",
+    "in": "en",
+    "for": "pour",
+    "plus": "+"
+  }
+}

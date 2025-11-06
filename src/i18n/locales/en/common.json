@@ -1,0 +1,38 @@
+{
+  "buttons": {
+    "calculate": "Calculate",
+    "convertToPace": "Convert to Pace →",
+    "convertToSpeed": "← Convert to Speed",
+    "calculate_hr_zones": "Calculate HR Zones",
+    "calculate_finish_time": "Calculate Finish Time",
+    "calculate_required_speed": "Calculate Required Speed"
+  },
+  "labels": {
+    "result": "Result",
+    "speed": "Speed (km/h)",
+    "pace": "Pace (min/km)",
+    "your_vma": "Your VMA (km/h)",
+    "estimated_vo2max": "Estimated VO2max",
+    "resting_hr": "Resting Heart Rate (bpm)",
+    "max_hr": "Maximum Heart Rate (bpm)",
+    "target_pace": "Target Pace (min/km)",
+    "target_speed": "Target Speed (km/h)",
+    "target_time": "Target Time (HH:MM:SS)",
+    "select_distance": "Select Distance"
+  },
+  "units": {
+    "kmh": "km/h",
+    "minkm": "min/km",
+    "bpm": "bpm",
+    "vo2": "ml/kg/min",
+    "km": "km"
+  },
+  "formatting": {
+    "equals": "=",
+    "or": "or",
+    "of": "of",
+    "in": "in",
+    "for": "for",
+    "plus": "+"
+  }
+}

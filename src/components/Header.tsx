@@ -1,6 +1,10 @@
-import { Box, Text } from "@mantine/core";
+import { Box, Text, Group } from "@mantine/core";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
+  const { t } = useTranslation("header");
+
   return (
     <Box
       style={{
@@ -10,13 +14,17 @@ export function Header() {
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Text size="xl" fw={700} mb="xs">
-        Running Conversions & Calculators
-      </Text>
-      <Text size="sm" opacity={0.9}>
-        Tools for runners: pace conversion, VMA calculator, race planning, and
-        heart rate zones
-      </Text>
+      <Group justify="space-between" align="flex-start" mb="sm">
+        <div>
+          <Text size="xl" fw={700} mb="xs">
+            {t("title")}
+          </Text>
+          <Text size="sm" opacity={0.9}>
+            {t("subtitle")}
+          </Text>
+        </div>
+        <LanguageSwitcher />
+      </Group>
     </Box>
   );
 }

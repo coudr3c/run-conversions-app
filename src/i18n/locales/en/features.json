@@ -1,0 +1,75 @@
+{
+  "tabs": {
+    "speedConversion": "Speed/Pace Conversion",
+    "vmaCalculator": "VMA Calculator",
+    "raceCalculator": "Race Time/Speed",
+    "heartRateZones": "Heart Rate Zones"
+  },
+  "speedConversion": {
+    "title": "Speed ⇄ Pace Conversion"
+  },
+  "vmaCalculator": {
+    "title": "VMA (Vitesse Maximale Aérobie) Calculator",
+    "formula": "Formula: VO2max ≈ VMA × 3.5",
+    "section_title": "Race Times by VMA Percentage",
+    "note": "Note:",
+    "disclaimer": "These are theoretical maximum times. Actual race performance depends on fitness, terrain, weather, and race strategy."
+  },
+  "vmaTable": {
+    "vma_percent": "% VMA",
+    "speed": "Speed (km/h)",
+    "pace": "Pace (min/km)",
+    "5km": "5 km",
+    "10km": "10 km",
+    "20km": "20 km",
+    "half_marathon": "Half Marathon (21.1 km)",
+    "marathon": "Marathon (42.2 km)"
+  },
+  "heartRateZones": {
+    "title": "Heart Rate Zones Calculator",
+    "method_title": "Heart Rate Reserve Method (Karvonen Formula)",
+    "hr_reserve_formula": "HR Reserve = Max HR - Resting HR",
+    "target_hr_formula": "Target HR = (HR Reserve × Intensity %) + Resting HR",
+    "section_title": "Training Zones",
+    "example_calculation": "Example calculation:"
+  },
+  "hrZonesTable": {
+    "zone": "Zone",
+    "percent_reserve": "% of Reserve",
+    "hr_range": "Heart Rate Range (bpm)",
+    "training_focus": "Training Focus",
+    "z1": "Z1",
+    "z2": "Z2",
+    "z3": "Z3",
+    "z4": "Z4",
+    "z5": "Z5",
+    "recovery": "Recovery, warm-up, cool-down",
+    "endurance": "Endurance base building, easy runs",
+    "tempo": "Tempo runs, aerobic development",
+    "lactate": "Lactate threshold, race pace",
+    "vo2max": "VO2max intervals, high intensity"
+  },
+  "raceCalculator": {
+    "title": "Race Time/Speed Calculator",
+    "custom_distance": "Custom Distance (km)"
+  },
+  "raceCalculatorDistances": {
+    "5km": "5 km",
+    "10km": "10 km",
+    "20km": "20 km",
+    "half_marathon": "Half Marathon",
+    "marathon": "Marathon",
+    "custom": "Custom"
+  },
+  "raceTime": {
+    "title": "Calculate Race Time",
+    "description": "Enter your target pace or speed to calculate finish time",
+    "result_label": "Estimated Finish Time"
+  },
+  "requiredPace": {
+    "title": "Calculate Required Speed",
+    "description": "Enter your target finish time to calculate required pace/speed",
+    "result_label": "Required Pace & Speed",
+    "to_finish": "To finish"
+  }
+}
