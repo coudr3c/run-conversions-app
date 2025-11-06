@@ -1,5 +1,5 @@
-import { Box, Button, Text, TextInput, Title } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { Box, Text, TextInput, Title } from "@mantine/core";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Pace, Time } from "../../types/types";
 import * as utils from "../../utils/utils";
@@ -27,20 +27,20 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
   const [displayedSpeed, setDisplayedSpeed] = useState<number>(12);
 
   const [displayedDistance, setDisplayedDistance] = useState<number>(distance);
-
+  
   const roundToTwoDecimals = useCallback((a: number) => {
     return utils.roundToTwoDecimals(a);
   }, []);
-
+  
   const timeMinSecToBase10 = useCallback((time: Time) => {
     return utils.timeMinSecToBase10(time);
   }, []);
-
+  
   const paceBase10ToMinSec = useCallback((pace: number) => {
     return utils.paceBase10ToMinSec(pace);
   }, []);
-
-  const handleCalculate = () => {
+  
+  useEffect(() => {
     setDisplayedDistance(distance);
     const h = isNaN(inputH) ? 0 : inputH;
     const m = isNaN(inputM) ? 0 : inputM;
@@ -69,8 +69,8 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
       const speed = roundToTwoDecimals((distance * 60) / totalTimeBase10);
       setDisplayedSpeed(speed);
     }
-  };
-
+  }, [distance, inputH, inputM, inputS, timeMinSecToBase10, paceBase10ToMinSec, roundToTwoDecimals]);
+  
   return (
     <>
       <Title order={3} size="h4" mb="xs">
@@ -139,9 +139,6 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
           />
         </Box>
       </Box>
-      <Button mt="md" onClick={handleCalculate}>
-        {tCommon("buttons.calculate_required_speed")}
-      </Button>
 
       <Box
         style={{
