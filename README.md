@@ -4,11 +4,19 @@ A simple web app for converting running paces and speeds between different units
 
 **Live site**: https://running-conversions.rcoudert.com/
 
+## Screenshot
+
+![Running Conversions App](./public/screenshot.png)
+
 ## Features
 
-- Convert between min/km, min/mile, km/h, and mph
+- Convert between min/km and km/h
+- Calculate VMA-based race predictions across multiple distances
+- Calculate race times and required speeds for specific finish times
+- Heart rate zone calculator using the Karvonen formula
 - Clean and intuitive interface
 - Real-time conversions
+- Available in English and French
 
 ## Getting Started
 
