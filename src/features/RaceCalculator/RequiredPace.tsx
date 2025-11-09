@@ -57,10 +57,14 @@ export function RequiredPace({ distance }: RequiredPaceProps) {
       seconds: s,
     });
 
-    // Calculate pace (time per km)
-    const paceBase10 = totalTimeBase10 / distance;
-    const pace = paceBase10ToMinSec(paceBase10);
-    setDisplayedPace(pace);
+    if (distance > 0) {
+      // Calculate pace (time per km)
+      const paceBase10 = totalTimeBase10 / distance;
+      const pace = paceBase10ToMinSec(paceBase10);
+      setDisplayedPace(pace);
+    } else {
+      setDisplayedPace({minutes: 0, seconds: 0})
+    }
 
     // Calculate speed (km/h)
     if (totalTimeBase10 === 0) {

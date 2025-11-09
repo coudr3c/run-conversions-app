@@ -88,7 +88,7 @@ export function RaceCalculator() {
             );
             setCustomDistance(distance);
             // If "Custom" chip is selected, update the selected distance
-            if (selectedChip === "Custom") {
+            if (selectedChip === t("raceCalculatorDistances.custom")) {
               setSelectedDistance(isNaN(distance) ? 0 : distance);
             }
           }}
